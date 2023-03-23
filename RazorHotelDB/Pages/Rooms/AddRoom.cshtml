@@ -1,0 +1,35 @@
+﻿@page
+@model RazorHotelDB.Pages.Rooms.AddRoomModel
+@{
+    ViewData["title"] = "addroom";
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="@Model.Room.RoomNr"></label>
+                <input asp-for="@Model.Room.RoomNr" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Room.HotelNr"> </label>
+                <input readonly asp-for="@Model.HotelId" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Room.Types" class="control-label"> </label>
+                <select asp-for="@Model.RoomType" asp-items="Html.GetEnumSelectList<Models.RoomType>()" class="form-control">         
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Room.Pris"> </label>
+                <input asp-for="@Model.Room.Pris" />
+            </div>
+            <div class="form-group">
+                <a asp-page="GetAllRooms" asp-route-id="@Model.HotelId" class="btn btn-primary"> Cancel </a>
+                <input type="submit" value="add room" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>

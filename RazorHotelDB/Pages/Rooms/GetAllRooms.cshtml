@@ -1,0 +1,59 @@
+﻿@page
+@model RazorHotelDB.Pages.Rooms.GetAllRoomsModel
+@using RazorHotelDB.Models;
+@using RazorHotelDB.Interfaces;
+@inject IHotelService hotelRepo;
+@{
+    ViewData["title"] = "GetRoomsFromHotel";
+}
+
+<a asp-page="AddRoom" asp-route-id="@Model.ID"> add room </a>
+<form method="get">
+    Search <input type="text" asp-for="FilterCriteria" />
+    <input type="radio" asp-for="FilterID" value="1"> Price </>
+    <input type="submit" value="Filter" />
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Hotel Name
+            </th>
+            <th>
+                room nr
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Price
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Rooms.Count() != 0)
+        {
+            @foreach (var item in Model.Rooms)
+            {
+                <tr>
+                    <td>
+                        @hotelRepo.GetHotelFromIdAsync(item.HotelNr).Result.Navn
+                    </td>
+                    <td>
+                        @item.RoomNr
+                    </td>
+                    <td>
+                        @item.Types
+                    </td>
+                    <td>
+                         @item.Pris
+                    </td>
+                    <td>
+                        <a asp-page="UpdateRoom" asp-route-id="@item.RoomNr" asp-route-Hotelid="@item.HotelNr"> update room </a>|<a asp-page="DeleteRoom" asp-route-id="@item.RoomNr" asp-route-hotelId="@item.HotelNr"> delete room </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

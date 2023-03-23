@@ -1,0 +1,57 @@
+﻿@page
+@model RazorHotelDB.Pages.Hotels.GetAllHotelsModel
+@{
+    ViewData["title"] = "GetAllHotels";
+}
+
+<form method="get">
+    Search <input type="text" asp-for="FilterCriteria" />
+    <input type="radio" asp-for="FilterID" value="1"/> Name </>
+    <input type="radio" asp-for="FilterID" value="2"> Address </>
+    <input type="submit" value="Filter" />
+</form>
+
+<p>
+    <a asp-page="AddHotel">Create a new hotel</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Hotel No
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Address
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Hotels.Count() != 0)
+        {
+            @foreach (var item in Model.Hotels)
+            {
+                <tr>
+                    <td>
+                        @item.HotelNr
+                    </td>
+                    <td>
+                        @item.Navn
+                    </td>
+                    <td>
+                        @item.Adresse
+                    </td>
+                    <td>
+                        <a asp-page="UpdateHotel" asp-route-id="@item.HotelNr"> Update</a>|<a asp-page="DeleteHotel" asp-route-id="@item.HotelNr">Delete </a>|<a asp-page="/Rooms/AddRoom" asp-route-id="@item.HotelNr"> add room to hotel</a>
+                    </td>
+                    <td>
+                        <a asp-page="/Rooms/GetAllRooms" asp-route-id="@item.HotelNr"> Rooms </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
